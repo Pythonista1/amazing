@@ -1,0 +1,90 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} User {% endblock title %}
+
+{% load static crispy_forms_tags i18n %}
+
+{% block javascript %}
+    <script src="{% static 'schools/js/users.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+    <div class="right_col" role="main">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h1><i class="fa fa-user"></i><b> Manage User</b></h1>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="" data-example-id="togglable-tabs">
+
+                            <ul class="nav nav-tabs bordered" style="margin-bottom: 10px;">
+                                <li role="presentation" class="active"><a href="#">
+                                    <i class="fa fa-pencil-square-o"></i> Edit User</a>
+                                </li>
+                            </ul>
+                            <br/>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab_user_list">
+                                    <div class="x_content">
+
+                                       <form class="form-horizontal form-label-left"
+                                              role="form"
+                                              action=""
+                                              method="post"
+                                              enctype="multipart/form-data"
+                                              accept-charset="utf-8">{% csrf_token %}
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12 mb-0">
+
+                                                    <p class="text-muted well well-sm no-shadow"
+                                                       style="margin-top: 10px;">
+                                                        <strong>Edit Information:</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                             <div class="col-sm-offset-3 col-sm-4">
+                                            <div class="form-group">
+                                            {{ form|crispy}}
+                                            </div> 
+                                            </div> 
+
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-3 col-sm-9">
+                                                    <a href="{% url 'register' %}"
+                                                       class="btn btn-outline-secondary" type="button">Cancel</a>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                                <!-- THE MODAL WE WILL BE USING -->
+                                <div class="modal fade" id="modal-user">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock content %}
+
+
+

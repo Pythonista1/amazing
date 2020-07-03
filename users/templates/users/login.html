@@ -1,0 +1,88 @@
+{% extends "app/base_site.html" %}
+{% load crispy_forms_tags %}
+{% block title %} Web System {% endblock title %}
+
+{% load static i18n %}
+
+
+{% block stylesheets %}
+    {{ block.super }}
+    <!-- Animate.css -->
+    <link href="/static/vendors/animate.css/animate.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block body_class %}login{% endblock body_class %}
+
+
+{% block content %}
+<style>
+.first-info{
+    background-repeat:no-repeat;
+    background-size:100%;
+    background-position:center;
+    background-image: url( "{% static 'img/uccb.jpg' %} ");
+}
+</style>
+<div class="right_col" role="main" style="background-color: white">
+      <div class="row">
+         <!--fade up notification upon successful redirect-->
+            {% if messages %}
+            <div class="col-lg-6" style="float: right">
+                <div class="alert alert-info" id="success-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <h3 {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h3>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>       
+           {% endif %} 
+             <ul class="nav navbar-nav navbar-right">
+                   <li class="nav-item">
+                        <a href="{% url 'index_public' %}"
+                           class="nav-link border border-dark grey-text rounded waves-effect">
+                            <h3 class="fa fa-globe mr-3" style="font:100px">Visit Website</h3>
+                        </a>
+                    </li>
+                </ul>      
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+
+                <section class="first-info border login_content" style="color:black">
+
+                    <h3 class="border-bottom" style=" font-weight:bolder">CHURCH WEB SYSTEM </h3>
+                <div class="separator"></div>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                       <div class="row"><div class="col-lg-3"></div>
+                            <fieldset class="form-group col-lg-8">  
+                                <div class="form-group" style="text-align: left;font-size: 120%">
+                                {{ form|crispy}}
+                                </div>      
+                            </fieldset>
+                       </div>
+                       <input type="hidden" name="next" value="{{ next }}" />
+                       <div class="row">
+                            <div class="form-group">
+                                <button class="btn btn-success" type="submit"> Login</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p><a href="{% url 'password_reset' %}" style="color: red">Forgot your password?</a></p>
+                </section>
+            </div>
+        </div>
+    </div>
+      </div>
+    </div>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
