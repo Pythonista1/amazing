@@ -1,0 +1,209 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% load static i18n %}
+
+{% block javascript %}
+    <script src="{% static 'schools/js/profiles.js' %}"></script>
+{% endblock %}
+{% block content %}
+{% load humanize %}
+    <div class="right_col" role="main">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2 class="head-title"><i class="fa fa-lock"></i><small> My Profile</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content quick-link">
+                        <span style="color: crimson;">Quick Link:</span>
+                        <a href="{% url 'edit-profile' %}">Update Profile</a>
+                        | <a href="{% url 'password_reset' %}">Reset Password</a>
+                        | <a href="{% url 'logout' %}">Log Out</a>
+                    </div>
+                    <div class="x_content">
+                        <div class="" data-example-id="togglable-tabs">
+
+                             <ul class="nav nav-tabs bordered">
+                                <li role="presentation" class="active"><a href="{% url 'profile' %}"><i
+                                        class="fa fa-eye"></i> View Profile</a>
+                                </li>
+                                <li role="presentation"><a href="{% url 'edit-profile' %}"><i
+                                        class="fa fa-pencil-square-o"></i> Update Your Profile</a>
+                                </li>
+                            </ul>
+                            <br/>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab_profile">
+                                    <div class="x_content">
+                                        <div  class="text-center">
+                                            <div class="profile_img">
+                                                {% if user.full_name.Photo %}
+                                                    <img src="{{ user.full_name.Photo.url }}"
+                                                         alt="..." width="100"
+                                                         style="background: rgba(15,174,221,0.97); padding: 2px;"/>
+                                                {% endif %}
+                                                <h3>{{ request.user.full_name.Initials }} {{ request.user.full_name }}</h3>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                        <h3>Your Personal Information</h3>
+                                        <table id="tablePreview" class="table table-bordered table-striped">
+                                            <tbody>
+                                            <tr>
+                                                <th>1. Username</th>
+                                                <td>{{ request.user.username }}</td>
+                                                <th>2. First Name</th>
+                                                <td>{{ request.user.full_name.First_Name }}</td>
+                                                <th>4. Second Name</th>
+                                                <td>{{ request.user.full_name.Second_Name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>5. Gender</th>
+                                                <td>{{ request.user.full_name.Gender }}</td>
+                                                <th>6. Marital Status</th>
+                                                <td>{{ request.user.full_name.Marital_Status }}</td>
+                                                <th>7. Home Cell</th>
+                                                <td> {{ request.user.full_name.Home_Cell }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>8. Email</th>
+                                                <td>{{ request.user.full_name.Email }}</td>
+                                                <th>9. Phone</th>
+                                                <td>{{ request.user.full_name.Telephone }}</td>
+                                                <th>10. Residence</th>
+                                                <td>{{ request.user.full_name.Residence }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>11. Education</th>
+                                                <td>{{ request.user.full_name.Education_Level }}</td>
+                                                <th>12. Profession</th>
+                                                <td>{{ request.user.full_name.Profession }}</td>
+                                                <th>13. Place of Work</th>
+                                                <td>{{ request.user.full_name.Place_of_Work }}</td>
+                                            </tr>
+                                           <tr>
+                                                <th>14. Salvation Date</th>
+                                                <td>{{ request.user.full_name.Date_Of_Salvation }}</td>
+                                                <th>15. Date Of Birth</th>
+                                                <td>{{ request.user.full_name.Date_Of_Birth }}</td>
+                                                <th>16. Ministry at Church</th>
+                                                <td>{{ request.user.full_name.Ministry_Involved_In }}</td>
+                                            </tr>
+                                             <tr>
+                                                <th>17. Home District</th>
+                                                <td>{{ request.user.full_name.District }}</td>
+                                                <th>18. Village</th>
+                                                <td>{{ request.user.full_name.Village }}</td>
+                                                <th>19. Next of Kin</th>
+                                                <td>{{ request.user.full_name.Name_Of_Next_Of_Kin }}</td>
+                                            </tr>
+
+                                            
+                                            </tbody>
+                                            <!--Table body-->
+                                        </table>
+                                       
+                                    </div>
+                                    {% if user.full_name.id == member_id %}
+                                    <h3><span> Hello <b>{{request.user.full_name.Initials}} {{request.user.full_name}}</b> Here Are Your Reports</span></h3><br><br>
+                                    
+
+                                    <h4><b>1. Tithes Report </h4><br>
+                                    <table id="invoice-table" class=" table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Service</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                
+                                                {% for item in tithes %}
+                                                <tr>
+                                                  <td >{{ item.Date}}</td>
+                                                  <td>{{ item.Service}}</td>
+                                                  <td>{{ item.Amount|intcomma}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                    </table><br><br>
+                                      <h4><b>2. Thanks Giving Report </h4><br>
+                                    <table id="invoice-table" class=" table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Service</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in thanks %}
+                                            <tr>
+                                              <td >{{ item.Date}}</td>
+                                              <td>{{ item.Service}}</td>
+                                              <td>{{ item.Amount|intcomma}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table><br><br>
+                                    <h4><b>3. Pledges Report </h4><br>
+                                    <table id="invoice-table" class=" table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Pledge Reason</th>
+                                                <th>Pledged Amount</th>
+                                                <th>Amount Paid</th>
+                                                <th> Pledge Balance</th>
+                                                <th>Pledge Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in pledges %}
+                                            {% if item.Amount_Pledged is not 0 %}
+                                            <tr>    
+                                                  <td>{{ item.Reason}}</td>
+                                                  <td>{{ item.Amount_Pledged |intcomma}}</td>
+                                                  <td>{{ item.total_pledge_paid|intcomma}}</td>
+                                                  <td>{{ item.Pledge_Balance|intcomma}}</td>
+                                                  <td>{{ item.updatestatus}}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% else %}
+                                    <p>id's didn't march</p>
+                                    {% endif %}
+                                    
+
+                                </div>
+
+                                <!-- THE MODAL WE WILL BE USING -->
+                                <div class="modal fade" id="modal-profile">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+
+

@@ -1,0 +1,82 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% load static i18n crispy_forms_tags %}
+
+{% block javascript %}
+    <script src="{% static 'schools/js/profiles.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2 class="head-title"><i class="fa fa-lock"></i><small> My Profile</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content quick-link">
+                        <span>Quick Link:</span>
+                        <a href="{% url 'edit-profile' %}">Update Profile</a>
+                        | <a href="#">Reset Password</a>
+                        | <a href="{% url 'logout' %}">Log Out</a>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="" data-example-id="togglable-tabs">
+
+
+                            <ul class="nav nav-tabs bordered">
+                                <li role="presentation"><a href="{% url 'profile' %}"><i
+                                        class="fa fa-eye"></i> Profile</a>
+                                </li>
+                                <li role="presentation" class="active"><a href="{% url 'edit-profile' %}"><i
+                                        class="fa fa-pencil-square-o"></i> Update</a>
+                                </li>
+                            </ul>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-sm-offset-1 col-sm-8">
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="tab_profile">
+
+                                            <div class="x_content">
+
+                                         {% load crispy_forms_tags %}
+
+                                                <form method="POST" enctype="multipart/form-data" >
+                                                    {% csrf_token %}
+                                                    <div class="form-row">
+                                                            <div class="form-group">
+                                                             {{form|crispy}}
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    <button type="submit" class="btn btn-primary" name="button">Submit</button>
+                                                </form>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content%}
